@@ -31,10 +31,15 @@ async function run() {
     await client.connect();
 
     const toysCollection = client.db("toysStore").collection("carToys");
-
+app.get('/toys',async(req,res)=>{
+    const result = await toysCollection.find().toArray()
+    res.send(result)
+})
 app.post('/post-toys',async(req,res)=>{
     const body=req.body;
     console.log(body);
+    const result = await toysCollection.insertOne(body);
+    res.send(result)
 })
 
 
