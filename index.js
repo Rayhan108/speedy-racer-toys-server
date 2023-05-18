@@ -35,6 +35,24 @@ app.get('/toys',async(req,res)=>{
     const result = await toysCollection.find().toArray()
     res.send(result)
 })
+// api for tab implement
+app.get('/toys/:text',async(req,res)=>{
+    console.log(req.params.text);
+    if(req.params.text == "bike"){
+        const result =await toysCollection.find({category:req.params.text}).toArray()
+        // console.log(result);
+        res.send(result)
+    }else if(req.params.text == "mini-train"){
+        const result =await toysCollection.find({category:req.params.text}).toArray()
+        // console.log(result);
+        res.send(result)  
+    }else{
+        const result =await toysCollection.find({category:req.params.text}).toArray()
+        // console.log(result);
+        res.send(result) 
+    }
+  
+})
 app.post('/post-toys',async(req,res)=>{
     const body=req.body;
     console.log(body);
