@@ -90,7 +90,7 @@ app.post('/post-toys',async(req,res)=>{
   res.send(result)
 })
 
-// update a user
+// update a toy
 app.patch('/post-toys/:id',async(req,res)=>{
   const id =req.params.id;
   const updateToy=req.body;
@@ -115,6 +115,14 @@ app.patch('/post-toys/:id',async(req,res)=>{
   res.send(result)
 })
 
+// delete toy
+
+app.delete('/post-toys/:id',async(req,res)=>{
+  const id =req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await toysCollection.deleteOne(query)
+   res.send(result)
+})
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
