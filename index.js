@@ -31,6 +31,11 @@ async function run() {
     await client.connect();
 
     const toysCollection = client.db("toysStore").collection("carToys");
+const indexKeys = {toyName:1}
+const indexOptions = {name:"toyName"}
+const result = await toysCollection.createIndex(indexKeys,indexOptions)
+
+
 app.get('/toys',async(req,res)=>{
     const result = await toysCollection.find().sort({ price: 1 }).toArray()
     res.send(result)
@@ -73,7 +78,16 @@ app.post('/post-toys',async(req,res)=>{
     const result = await toysCollection.insertOne(body);
     res.send(result)
 })
-
+// api for search
+app.get('/searchbyToy/:text',async(req,res)=>{
+  const text =req.params.text;
+  const result = await toysCollection.find({
+    $or: [
+      { toyName: { $regex: text, $options: "i" } },
+    ],
+  }).toArray()
+  res.send(result)
+})
 
 
 
