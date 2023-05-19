@@ -71,13 +71,7 @@ app.get('/allToys/:email',async(req,res)=>{
   const result= await toysCollection.find(query).toArray()
   res.send(result)
 })
-// post method
-app.post('/post-toys',async(req,res)=>{
-    const body=req.body;
-    // console.log(body);
-    const result = await toysCollection.insertOne(body);
-    res.send(result)
-})
+
 // api for search
 app.get('/searchbyToy/:text',async(req,res)=>{
   const text =req.params.text;
@@ -88,7 +82,38 @@ app.get('/searchbyToy/:text',async(req,res)=>{
   }).toArray()
   res.send(result)
 })
+// post method
+app.post('/post-toys',async(req,res)=>{
+  const body=req.body;
+  // console.log(body);
+  const result = await toysCollection.insertOne(body);
+  res.send(result)
+})
 
+// update a user
+app.patch('/post-toys/:id',async(req,res)=>{
+  const id =req.params.id;
+  const updateToy=req.body;
+  console.log(updateToy);
+  const filter = {_id: new ObjectId(id)}
+  const option ={upsert:true}
+
+  const updateDoc = {
+    $set: {
+      category:updateToy.category,
+      description:updateToy.description,
+      photoUrl:updateToy.photoUrl,
+      price:updateToy.price,
+      quantity:updateToy.quantity,
+      rating:updateToy.rating,
+      sellerEmail:updateToy.sellerEmail,
+      sellerName:updateToy.sellerName,
+      toyName:updateToy.toyName
+    },
+  };
+  const result = await toysCollection.updateOne(filter, updateDoc,option);
+  res.send(result)
+})
 
 
     // Send a ping to confirm a successful connection
