@@ -37,7 +37,7 @@ const result = await toysCollection.createIndex(indexKeys,indexOptions)
 
 
 app.get('/toys',async(req,res)=>{
-    const result = await toysCollection.find().sort({ price: 1 }).toArray()
+    const result = await toysCollection.find().sort({ price: 1 }).limit(20).toArray()
     res.send(result)
 })
 app.get('/toys/home/:id',async(req,res)=>{
