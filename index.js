@@ -32,7 +32,7 @@ async function run() {
 
     const toysCollection = client.db("toysStore").collection("carToys");
 app.get('/toys',async(req,res)=>{
-    const result = await toysCollection.find().toArray()
+    const result = await toysCollection.find().sort({ price: 1 }).toArray()
     res.send(result)
 })
 app.get('/toys/home/:id',async(req,res)=>{
@@ -45,15 +45,15 @@ app.get('/toys/home/:id',async(req,res)=>{
 app.get('/toys/:text',async(req,res)=>{
     console.log(req.params.text);
     if(req.params.text == "bike"){
-        const result =await toysCollection.find({category:req.params.text}).toArray()
+        const result =await toysCollection.find({category:req.params.text}).sort({ price: 1 }).toArray()
         // console.log(result);
         res.send(result)
     }else if(req.params.text == "mini-train"){
-        const result =await toysCollection.find({category:req.params.text}).toArray()
+        const result =await toysCollection.find({category:req.params.text}).sort({ price: 1 }).toArray()
         // console.log(result);
         res.send(result)  
     }else{
-        const result =await toysCollection.find({category:req.params.text}).toArray()
+        const result =await toysCollection.find({category:req.params.text}).sort({ price: 1 }).toArray()
         // console.log(result);
         res.send(result) 
     }
@@ -61,7 +61,7 @@ app.get('/toys/:text',async(req,res)=>{
 })
 app.post('/post-toys',async(req,res)=>{
     const body=req.body;
-    console.log(body);
+    // console.log(body);
     const result = await toysCollection.insertOne(body);
     res.send(result)
 })
