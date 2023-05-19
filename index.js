@@ -100,15 +100,10 @@ app.patch('/post-toys/:id',async(req,res)=>{
 
   const updateDoc = {
     $set: {
-      category:updateToy.category,
+      
       description:updateToy.description,
-      photoUrl:updateToy.photoUrl,
       price:updateToy.price,
       quantity:updateToy.quantity,
-      rating:updateToy.rating,
-      sellerEmail:updateToy.sellerEmail,
-      sellerName:updateToy.sellerName,
-      toyName:updateToy.toyName
     },
   };
   const result = await toysCollection.updateOne(filter, updateDoc,option);
