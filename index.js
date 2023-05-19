@@ -59,6 +59,14 @@ app.get('/toys/:text',async(req,res)=>{
     }
   
 })
+// myToys Api
+app.get('/allToys/:email',async(req,res)=>{
+  console.log(req.params.email);
+  const query ={sellerEmail:req.params.email}
+  const result= await toysCollection.find(query).toArray()
+  res.send(result)
+})
+// post method
 app.post('/post-toys',async(req,res)=>{
     const body=req.body;
     // console.log(body);
