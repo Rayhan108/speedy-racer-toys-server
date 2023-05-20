@@ -74,29 +74,31 @@ async function run() {
       }
     });
 
-    // api for sorting
-    app.get("/sortby/:text", async (req, res) => {
-      console.log(req.params.text);
-      if (req.params.text == "acending") {
-        const result = await toysCollection.find().sort({ price: 1 }).toArray();
-        // console.log(result);
-        res.send(result);
-      } else {
-        const result = await toysCollection
-          .find()
-          .sort({ price: -1 })
-          .toArray();
-        // console.log(result);
-        res.send(result);
-      }
-    });
+    // // api for sorting
+    // app.get("/sortby/:text", async (req, res) => {
+    //   console.log(req.params.text);
+    //   if (req.params.text == "acending") {
+    //     const result = await toysCollection.find().sort({ price: 1 }).toArray();
+    //     // console.log(result);
+    //     res.send(result);
+    //   } else {
+    //     const result = await toysCollection
+    //       .find()
+    //       .sort({ price: -1 })
+    //       .toArray();
+    //     // console.log(result);
+    //     res.send(result);
+    //   }
+    // });
+
+
     // myToys Api
     
    
     app.get("/myToys/:email", async (req, res) => {
       // console.log(req.params.email);
       const query = { sellerEmail: req.params.email };
-      const result = await toysCollection.find(query).toArray();
+      const result = await toysCollection.find(query).sort({price:1}).toArray();
       res.send(result);
     });
     // api for search
