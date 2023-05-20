@@ -31,8 +31,8 @@ async function run() {
     // await client.connect();
 
     const toysCollection = client.db("toysStore").collection("carToys");
-const indexKeys = {toyName:1}
-const indexOptions = {name:"toyName"}
+const indexKeys = {toyName:1,price:1}
+const indexOptions = {name:"toyNameprice"}
 const result = await toysCollection.createIndex(indexKeys,indexOptions)
 
 
@@ -48,7 +48,7 @@ app.get('/toys/home/:id',async(req,res)=>{
 })
 // api for tab implement
 app.get('/toys/:text',async(req,res)=>{
-    console.log(req.params.text);
+    // console.log(req.params.text);
     if(req.params.text == "bike"){
         const result =await toysCollection.find({category:req.params.text}).sort({ price: 1 }).toArray()
         // console.log(result);
@@ -64,6 +64,21 @@ app.get('/toys/:text',async(req,res)=>{
     }
   
 })
+
+// api for sorting
+app.get('/sortby/:text',async(req,res)=>{
+  // console.log(req.params.text);
+  if(req.params.text == "acending"){
+      const result =await toysCollection.find().sort({ price: 1 }).toArray()
+      // console.log(result);
+      res.send(result)
+  }else{
+      const result =await toysCollection.find().sort({ price: -1 }).toArray()
+      // console.log(result);
+      res.send(result) 
+  }
+
+})
 // myToys Api
 app.get('/allToys/:email',async(req,res)=>{
   console.log(req.params.email);
@@ -75,6 +90,8 @@ app.get('/allToys/:email',async(req,res)=>{
 // api for search
 app.get('/searchbyToy/:text',async(req,res)=>{
   const text =req.params.text;
+  
+
   const result = await toysCollection.find({
     $or: [
       { toyName: { $regex: text, $options: "i" } },
