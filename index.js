@@ -88,7 +88,7 @@ app.get('/allToys/:email',async(req,res)=>{
 })
 
 // api for search
-app.get('/searchbyToy/:text',async(req,res)=>{
+app.get('/toys/searchbyToy/:text',async(req,res)=>{
   const text =req.params.text;
   
 
